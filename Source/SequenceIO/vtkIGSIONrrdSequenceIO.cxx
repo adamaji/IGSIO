@@ -587,6 +587,10 @@ igsioStatus vtkIGSIONrrdSequenceIO::WriteInitialImageHeader()
 
   // Override fields
   this->NumberOfDimensions = isData3D ? 3 : 2;
+  if (this->Output2DDataWithZDimensionIncluded)
+  {
+    this->NumberOfDimensions++;
+  }
   if (isDataTimeSeries)
   {
     this->NumberOfDimensions++;
@@ -663,6 +667,10 @@ igsioStatus vtkIGSIONrrdSequenceIO::WriteInitialImageHeader()
   // "This (or "space dimension") has to precede the other orientation-related fields, because it determines
   // how many components there are in the vectors of the space origin, space directions, and measurement frame fields."
   int numSpaceDimensions = isData3D ? 3 : 2;
+  if (this->Output2DDataWithZDimensionIncluded)
+  {
+    numSpaceDimensions++;
+  }
   this->SetFrameField("space dimension", igsioCommon::ToString<int>(numSpaceDimensions));
 
   // Generate the origin string, such as (0,0) or (0,0,0)
@@ -1322,7 +1330,7 @@ igsioStatus vtkIGSIONrrdSequenceIO::UpdateDimensionsCustomStrings(int numberOfFr
     kindStr << "vector" << " ";
   }
 
-  int entries = (isData3D ? 3 : 2) + (numberOfFrames > 1 ? 1 : 0);
+  int entries = (isData3D ? 3 : 2) + (numberOfFrames > 1 || this->Output2DDataWithZDimensionIncluded ? 1 : 0);
 
   this->Dimensions[3] = numberOfFrames;
   // Write out all but the last entry
@@ -1333,7 +1341,7 @@ igsioStatus vtkIGSIONrrdSequenceIO::UpdateDimensionsCustomStrings(int numberOfFr
   }
 
   // pad kind string with spaces then append last entry
-  int lastDimension = (numberOfFrames > 1 ? 3 : (isData3D ? 2 : 1));
+  int lastDimension = (numberOfFrames > 1 ? 3 : (isData3D || this->Output2DDataWithZDimensionIncluded ? 2 : 1));
   std::string lastKind;
   if (numberOfFrames > 1)
   {

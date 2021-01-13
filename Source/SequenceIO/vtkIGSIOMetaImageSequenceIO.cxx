@@ -1408,7 +1408,7 @@ igsioStatus vtkIGSIOMetaImageSequenceIO::UpdateDimensionsCustomStrings(int numbe
     kindStr << "vector" << " ";
   }
 
-  int entries = (isData3D ? 3 : 2) + (numberOfFrames > 1 ? 1 : 0);
+  int entries = (isData3D ? 3 : 2) + (numberOfFrames > 1 || this->Output2DDataWithZDimensionIncluded ? 1 : 0);
 
   this->Dimensions[3] = numberOfFrames;
   // Write out all but the last entry
@@ -1419,9 +1419,9 @@ igsioStatus vtkIGSIOMetaImageSequenceIO::UpdateDimensionsCustomStrings(int numbe
   }
 
   // pad kind string with spaces then append last entry
-  int lastDimension = (numberOfFrames > 1 ? 3 : (isData3D ? 2 : 1));
+  int lastDimension = (numberOfFrames > 1 || this->Output2DDataWithZDimensionIncluded ? 3 : (isData3D ? 2 : 1));
   std::string lastKind;
-  if (numberOfFrames > 1)
+  if (numberOfFrames > 1 || this->Output2DDataWithZDimensionIncluded)
   {
     lastKind = "list";
   }

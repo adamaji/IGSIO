@@ -86,6 +86,10 @@ public:
   */
   virtual igsioStatus SetFileName(const std::string& aFilename) VTK_OVERRIDE;
 
+  /*! Accessors to control 2D Dims output */
+  vtkSetMacro(Output2DDataWithZDimensionIncluded, bool);
+  vtkGetMacro(Output2DDataWithZDimensionIncluded, bool);
+
 protected:
   vtkIGSIONrrdSequenceIO();
   virtual ~vtkIGSIONrrdSequenceIO();
@@ -133,6 +137,9 @@ protected:
 private:
   vtkIGSIONrrdSequenceIO(const vtkIGSIONrrdSequenceIO&);   //purposely not implemented
   void operator=(const vtkIGSIONrrdSequenceIO&);   //purposely not implemented
+
+  /*! If 2D data, boolean to determine if we should write out in the form X Y Nfr (false) or X Y 1 Nfr (true) */
+  bool Output2DDataWithZDimensionIncluded;
 };
 
 #endif // __vtkIGSIONrrdSequenceIO_h

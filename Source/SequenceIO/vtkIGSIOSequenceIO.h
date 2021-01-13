@@ -23,12 +23,12 @@ class VTKSEQUENCEIO_EXPORT vtkIGSIOSequenceIO : public vtkObject
 {
 public:
   /*! Write object contents into file */
-  static igsioStatus Write(const std::string& filename, const std::string& path, igsioTrackedFrame* frame, US_IMAGE_ORIENTATION orientationInFile = US_IMG_ORIENT_MF, bool useCompression = true, bool enableImageDataWrite = true);
-  static igsioStatus Write(const std::string& filename, igsioTrackedFrame* frame, US_IMAGE_ORIENTATION orientationInFile = US_IMG_ORIENT_MF, bool useCompression = true, bool enableImageDataWrite = true);
+  static igsioStatus Write(const std::string& filename, const std::string& path, igsioTrackedFrame* frame, US_IMAGE_ORIENTATION orientationInFile = US_IMG_ORIENT_MF, bool useCompression = true, bool enableImageDataWrite = true, bool forceWriteAs3D = false);
+  static igsioStatus Write(const std::string& filename, igsioTrackedFrame* frame, US_IMAGE_ORIENTATION orientationInFile = US_IMG_ORIENT_MF, bool useCompression = true, bool enableImageDataWrite = true, bool forceWriteAs3D = false);
 
   /*! Write object contents into file */
-  static igsioStatus Write(const std::string& filename, const std::string& path, vtkIGSIOTrackedFrameList* frameList, US_IMAGE_ORIENTATION orientationInFile = US_IMG_ORIENT_MF, bool useCompression = true, bool enableImageDataWrite = true);
-  static igsioStatus Write(const std::string& filename, vtkIGSIOTrackedFrameList* frameList, US_IMAGE_ORIENTATION orientationInFile = US_IMG_ORIENT_MF, bool useCompression = true, bool enableImageDataWrite = true);
+  static igsioStatus Write(const std::string& filename, const std::string& path, vtkIGSIOTrackedFrameList* frameList, US_IMAGE_ORIENTATION orientationInFile = US_IMG_ORIENT_MF, bool useCompression = true, bool enableImageDataWrite = true, bool forceWriteAs3D = false);
+  static igsioStatus Write(const std::string& filename, vtkIGSIOTrackedFrameList* frameList, US_IMAGE_ORIENTATION orientationInFile = US_IMG_ORIENT_MF, bool useCompression = true, bool enableImageDataWrite = true, bool forceWriteAs3D = false);
 
   /*! Read file contents into the object */
   static igsioStatus Read(const std::string& filename, vtkIGSIOTrackedFrameList* frameList);
